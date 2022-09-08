@@ -78,3 +78,11 @@ word-break: break-all;
 word-wrap: break-word;
 }
 
+.racingfont {
+    font-family: 'Racing Sans One', cursive;
+}
+
+.appname {
+    font-size: 1.5rem;
+}
+
