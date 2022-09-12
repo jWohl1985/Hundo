@@ -63,8 +63,60 @@
                 <div class="col-lg-8">
                     <pre class="line-numbers">
                         <code class="language-javascript">
-                            function HelloWorld(){
-                                alert("Hello World!");
+                            function runTheApp(){
+                                let input = getUserInput();
+                            
+                                if(isValidInput(input)){
+                                    let numbersArray = generateNumbers(input);
+                                    displayEvensBold(numbersArray);
+                                }
+                            }
+                            
+                            function getUserInput(){
+                                let start = document.getElementById("startingValue").value;
+                                let end = document.getElementById("endingValue").value;
+                            
+                                return [start,end];
+                            }
+
+                            function isValidInput(input){
+                                if (!parseInt(input[0]) || !parseInt(input[1])){
+                                    alert("Inputs must be integers!");
+                                    return false;
+                                }
+                            
+                                if (input[0] > input[1]){
+                                    alert("Starting number must be less than or equal to ending number!");
+                                    return false;
+                                }
+                            
+                                return true;
+                            }
+                            
+                            function generateNumbers(input){
+                                let numbers = [];
+                                for(let i = input[0]; i <= input[1]; i++){
+                                    numbers.push(i);
+                                }
+                                return numbers;
+                            }
+                            
+                            function displayEvensBold(numbersArray){         
+                                let tableBody = document.getElementById("result");
+                                let html = "";
+                            
+                                for(let i of numbersArray){
+                                    if (i % 2 == 0){
+                                        // note html does not render correctly on the web page, see source
+                                        html += "<tr><td><strong>" + i.toString() + "</strong></td></tr>";
+                                    }
+                                    else{
+                                        // note html does not render correctly on the web page, see source
+                                        html += "<tr><td>" + i.toString() + "</td></tr>"
+                                    }      
+                                }
+                            
+                                tableBody.innerHTML = html;
                             }
                         </code>
                     </pre>
@@ -72,9 +124,42 @@
 
                 <!-- Code Writeup -->
                 <div class="col-lg-4">
-                    <p>The code is structured in one function.</p>
-                    <h5>Hello World</h5>
-                    <p>Hello world is a function that displays an alert with a message of "Hello World."</p>
+                    <h5>runTheApp() function</h5>
+                    <p>This is the main function that runs when the button is clicked. It "abstracts away" the details to
+                        show the high-level structure:
+                        <ul>
+                            <li>Get the user input</li>
+                            <li>If it's valid, generate the numbers and display them</li>
+                            <li>If it isn't, tell the user what they need to do to fix it</li>
+                        </ul>
+                    </p>
+                    <h5>getUserInput() function</h5>
+                    <p>This returns an array with the starting number as the first element and ending number
+                        as the second element. It uses the document object to retrieve these values from
+                        the browser DOM elements with the matching names.
+                    </p>
+                    <h5>isValidInput() function</h5>
+                    <p>This takes in an array holding the starting and ending values. It returns a bool
+                        that signifies whether or not the input is valid. If the numbers are not integers
+                        or the starting number is greater than the ending number, an appropriate error is
+                        displayed and false is returned. If both of these checks pass, true is returned. The
+                        runTheApp() function uses this bool to decide if it should continue with the input.
+                    </p>
+                    <h5>generateNumbers() function</h5>
+                    <p>This is only called after the input is validated. It uses a for loop to place each
+                        integer from the starting number up to the ending number in an array.</p>
+
+                    <h5>displayEvensBold() function</h5>
+                    <p>This function locates the table body in the HTML. Then, for each number in the array
+                        that was generated by generateNumbers(), it surrounds that number by the appropriate HTML
+                        tags to create a table row, and appends this HTML to a string. Once the loop is finished,
+                        the entire string is written to the innerHTML property of the table body.<br><br>
+
+                        To make the even numbers bold, a conditional is used with the modulus (%) operator. If the remainder
+                        is 0 when we divide by 2, the number must be even. It is then surrounded with an additional "strong"
+                        tag to make it bold in the HTML. (Note that the HTML tags don't render properly in the code display
+                        to the left, but they are there in the source code).
+                    </p>
                 </div>
 
            </div>
